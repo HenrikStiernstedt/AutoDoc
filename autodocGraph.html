@@ -70,7 +70,8 @@
 			
 			loader.click(function() {
 				console.log("Ladd knapp!");
-				input.value = $('#rawValue').text();
+				//input.value = $('#rawValue').text();
+				vm.LoadGraph();
 			});
 		});							
 
@@ -91,7 +92,7 @@
 				</div>
 				<div>
 					<div>
-						<button type="button" id="loader">Loader</button>
+						<button type="button" id="loader">Reload</button>
 						<button type="button" id="render">Render</button>
 					</div>
 					<div>Graph:
@@ -115,6 +116,21 @@
 			<pre id="rawValue" style="display:none">
 				graph LR
 					{{prock.Info.object_id}}[{{prock.Info.Name}}] 
+
+					<template v-for="(m, index) in prock.MetaDataReference">
+						<template v-if="m.Kind == 'menu item'">
+							<template v-if="m.MenuItemId !== null && m.MenuItemId != undefined">
+								<!-- {{m.IconCssString}} TODO: Fungerar inte när jag testat. -->
+								MI{{m.MenuItemId}}([{{m.MenuItemId}} {{EscapeLabel(m.MenuItemName)}}])-->{{prock.Info.object_id}}
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="m.Description !== null && m.Description != undefined">
+								META{{index}}([{{m.Kind}} '{{EscapeLabel(m.Description)}}'])-->{{prock.Info.object_id}}
+							</template>
+						</template>
+						
+					</template >
 
 					<template  v-for="c in prock.ReferencedBy">
 					

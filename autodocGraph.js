@@ -51,21 +51,34 @@ var vm = new Vue({
 					vm.status.CurrentItem.schema = schema;
 					vm.status.CurrentItem.name = name;
 					console.log(prockInfo);
-					setTimeout(vm.RenderGraph, 100); // TODO: Find a better way to "wait" for vue to render the mermaid input data
+					setTimeout(vm.LoadGraph, 100); // TODO: Find a better way to "wait" for vue to render the mermaid input data
 				},
 				error: function(prockInfo) {
 					console.error("Failed to load prockInfo");
 				}
 			});
    		},
-		RenderGraph: function() {
+		LoadGraph: function() {
 			var input = document.getElementById("input");
 			input.value = $('#rawValue').text();
-			
+			vm.RenderGraph();
+		},
+		RenderGraph: function() {
+			//input.value = $('#rawValue').text();
+			var input = document.getElementById("input");
 			var output = document.getElementById("output");
 			mermaid.render('theGraph', input.value, function(svgCode) {
 				output.innerHTML = svgCode;
 			});
+		},
+		EscapeLabel : function(name) {
+			return name
+				.replaceAll('&', '&amp;')
+				.replaceAll('<', '&lt;')
+				.replaceAll('>', '&gt;')
+				.replaceAll('"', '&quot;')
+				.replaceAll("'", '&#039;')
+				.replaceAll('[', '').replaceAll(']', '');
 		}
   	}  
 });
