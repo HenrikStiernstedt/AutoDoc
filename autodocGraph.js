@@ -3,7 +3,8 @@ var vm = new Vue({
   el: '#app',
   data: {
 		prock: { 
-			"Info": {"object_id":576109193,"Name":"Appointment.Appointment_API_InsertUpdate_FieldByField","Length":10549,"SchemaName":"Appointment","ObjectName":"Appointment_API_InsertUpdate_FieldByField"}, "MetaDataReference": [{}], 
+			"Info": {"object_id":576109193,"Name":"Appointment.Appointment_API_InsertUpdate_FieldByField","Length":10549,"SchemaName":"Appointment","ObjectName":"Appointment_API_InsertUpdate_FieldByField", "definition": ""}, 
+			"MetaDataReference": [{}], 
 			"Calls": [{"object_id":1147919211,"Name":"Appointment.AppointmentStatus_API_GetIdForCancelled","SchemaName":"Appointment","ObjectName":"AppointmentStatus_API_GetIdForCancelled"},{"object_id":1184111359,"Name":"Appointment.Appointment_InsertUpdate_Internal","SchemaName":"Appointment","ObjectName":"Appointment_InsertUpdate_Internal"},{"object_id":1380968046,"Name":"Room.Room_API_All","SchemaName":"Room","ObjectName":"Room_API_All"},{"object_id":1985494202,"Name":"Util.User_GetIdForScheduledJob","SchemaName":"Util","ObjectName":"User_GetIdForScheduledJob"}],
 			"ReferencedBy":[{"object_id":121155577,"Name":"AppointmentIntegration.CreateAppointment","SchemaName":"AppointmentIntegration","ObjectName":"CreateAppointment"},{"object_id":185155805,"Name":"AppointmentIntegration.UpdateAppointment","SchemaName":"AppointmentIntegration","ObjectName":"UpdateAppointment"},{"object_id":544109079,"Name":"Appointment.Appointment_API_ConnectToAppointmentGroup_Internal","SchemaName":"Appointment","ObjectName":"Appointment_API_ConnectToAppointmentGroup_Internal"},{"object_id":858642302,"Name":"Appointment.Web_Appointment_NumberOfParticipants_Update","SchemaName":"Appointment","ObjectName":"Web_Appointment_NumberOfParticipants_Update"},{"object_id":880110276,"Name":"Appointment.Appointment_AppointmentStatus_InsertUpdate","SchemaName":"Appointment","ObjectName":"Appointment_AppointmentStatus_InsertUpdate"},{"object_id":944110504,"Name":"Appointment.Appointment_Cancel","SchemaName":"Appointment","ObjectName":"Appointment_Cancel"},{"object_id":956634551,"Name":"Appointment.Web_Appointment_CustomerNumber_Update","SchemaName":"Appointment","ObjectName":"Web_Appointment_CustomerNumber_Update"},{"object_id":1004634722,"Name":"Appointment.Web_Appointment_Insert","SchemaName":"Appointment","ObjectName":"Web_Appointment_Insert"},{"object_id":1617597001,"Name":"Appointment.AppointmentSeries_Appointment_EditableGrid","SchemaName":"Appointment","ObjectName":"AppointmentSeries_Appointment_EditableGrid"},{"object_id":1776113468,"Name":"Appointment.AppointmentSeries_Appointment_InsertUpdate_Internal_AddOn","SchemaName":"Appointment","ObjectName":"AppointmentSeries_Appointment_InsertUpdate_Internal_AddOn"},{"object_id":1849877757,"Name":"ExchangeSynchronisation.AppointmentImport","SchemaName":"ExchangeSynchronisation","ObjectName":"AppointmentImport"}]},
 
@@ -81,7 +82,13 @@ var vm = new Vue({
 				.replaceAll("'", '&#039;')
 				.replaceAll('(', '').replaceAll(')', '')
 				.replaceAll('[', '').replaceAll(']', '');
+		},
+		FormatSqlCode : function(definition) {
+			return definition
+				.replaceAll("\r\n", "<br />")
+				.replaceAll("\t", "    ");
 		}
+
   	}  
 });
 

@@ -26,6 +26,12 @@
 
 		<!-- mermaid graph -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.13.10/mermaid.min.js"></script>
+
+	<!-- Code hightlighting. May need vue plugin, or that I go away from vue. -->
+	<!--
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js" integrity="sha512-BNc7saQYlxCL10lykUYhFBcnzdKMnjx5fp5s5wPucDyZ7rKNwCoqJh1GwEAIhuePEK4WM9askJBRsu7ma0Rzvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>hljs.highlightAll();</script>
+	-->
 	
 	<style>
 		pre {
@@ -33,6 +39,15 @@
 		}
 		.Path {
 			white-space: nowrap;
+		}
+
+		.definitionCodeArea {
+			white-space: pre; 
+			font-family:'Courier New', 'Courier', 'monospace';
+			background: beige;
+			border: 1px solid rgb(150, 150, 150);
+			max-width: 2000px;
+
 		}
 	</style>
 
@@ -149,21 +164,24 @@
 				{{prock.Info.object_id}}
 				end
 				<template v-for="s in distinctCallSchemas()">
-				subgraph {{s}}out [{{s}}]
-				<template v-for="p in GetSchemas(s)">
-				{{p.object_id}}
-				</template>
-				end
+					subgraph {{s}}out [{{s}}]
+					<template v-for="p in GetSchemas(s)">
+						{{p.object_id}}
+					</template>
+					end
 				</template>
 				<template v-for="s2 in distinctReferencedSchemas()">
-				subgraph {{s2}}in [{{s2}}]
-				<template v-for="p2 in GetReferencedSchemas(s2)">
-				{{p2.object_id}}
-				</template>
+					subgraph {{s2}}in [{{s2}}]
+					<template v-for="p2 in GetReferencedSchemas(s2)">
+						{{p2.object_id}}
+					</template>
 				end
 				</template>
-
 			</pre>
+
+			<div class="definitionCodeArea" v-html="FormatSqlCode(prock.Info.definition)">
+				
+			</div>
 		
 		</div>
 
