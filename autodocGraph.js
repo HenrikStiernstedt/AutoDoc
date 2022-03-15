@@ -41,7 +41,8 @@ var vm = new Vue({
 		},
 		
 		GetProc: function(database, schema, name) {
-			console.log("Getting " + database + "." + schema + "." + name)
+			console.log("Getting " + database + "." + schema + "." + name);
+			vm.status.Database = database;
 			var newProck = null;
 			status = $.ajax({
 				dataType: "json",
@@ -52,6 +53,7 @@ var vm = new Vue({
 					vm.status.CurrentItem.database = database;
 					vm.status.CurrentItem.schema = schema;
 					vm.status.CurrentItem.name = name;
+				
 					console.log(prockInfo);
 					setTimeout(vm.LoadGraph, 100); // TODO: Find a better way to "wait" for vue to render the mermaid input data
 				},
@@ -78,12 +80,16 @@ var vm = new Vue({
 				.replaceAll('&', '&amp;')
 				.replaceAll('<', '&lt;')
 				.replaceAll('>', '&gt;')
-				.replaceAll('"', '&quot;')
-				.replaceAll("'", '&#039;')
+				.replaceAll('"', '&quot')
+				.replaceAll("'", '&#039')
+				.replaceAll('®', '')
 				.replaceAll('(', '').replaceAll(')', '')
 				.replaceAll('[', '').replaceAll(']', '');
 		},
 		FormatSqlCode : function(definition) {
+			if(definition == null) {
+				return "";
+			}
 			return definition
 				.replaceAll("\r\n", "<br />")
 				.replaceAll("\t", "    ");
