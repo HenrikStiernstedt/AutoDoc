@@ -135,14 +135,14 @@
 					<template  v-for="c in prock.ReferencedBy">
 					
 						{{c.object_id}}[{{c.Name}}]-->{{prock.Info.object_id}}
-						click {{c.object_id}} "?callback={{c.Name}}" "Hi I'm a callback, whats up"
+						click {{c.object_id}} "?callback={{status.Database}}.{{c.Name}}"
 					</template >
 					
 					
 					<template  v-for="c in prock.Calls">
 					
 						{{prock.Info.object_id}}-->{{c.object_id}}[{{c.Name}}] 
-						click {{c.object_id}} "?callback={{c.Name}}" "Hi I'm a callback, whats up"
+						click {{c.object_id}} "?callback={{status.Database}}.{{c.Name}}"
 					</template >
 
 				subgraph Aktivt objekt

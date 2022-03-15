@@ -13,7 +13,7 @@ var vm = new Vue({
 					"schema": "Appointment",
 					"name": "Appointment_API_InsertUpdate_FieldByField"
 					},
-				"Database":	"Stortinget"
+				"Database":	"Stortinget_Bokningssystem"
 		}
 	},
 	methods :{
@@ -39,15 +39,16 @@ var vm = new Vue({
 			return filtered;
 		},
 		
-		GetProc: function(schema, name) {
-			console.log("Getting " + schema + "." + name)
+		GetProc: function(database, schema, name) {
+			console.log("Getting " + database + "." + schema + "." + name)
 			var newProck = null;
 			status = $.ajax({
 				dataType: "json",
-				url: 'http://pegasus/pegasus_demo/Multirest/AutoDoc/Stortinget_Bokningssystem/'+schema+'/'+name,
+				url: 'http://pegasus/pegasus_demo/Multirest/AutoDoc/'+database+'/'+schema+'/'+name,
 				data: null,
 				success: function(prockInfo) {
 					vm.prock = (prockInfo);
+					vm.status.CurrentItem.database = database;
 					vm.status.CurrentItem.schema = schema;
 					vm.status.CurrentItem.name = name;
 					console.log(prockInfo);
@@ -78,6 +79,7 @@ var vm = new Vue({
 				.replaceAll('>', '&gt;')
 				.replaceAll('"', '&quot;')
 				.replaceAll("'", '&#039;')
+				.replaceAll('(', '').replaceAll(')', '')
 				.replaceAll('[', '').replaceAll(']', '');
 		}
   	}  
@@ -87,9 +89,9 @@ $(function(){
 	console.log("Loading site with new params");
 	let params = new URLSearchParams(document.location.search);
 	let newProck = params.get("callback"); 
-	if(newProck.split('.').length == 2)
+	if(newProck.split('.').length == 3)
 	{
-		vm.GetProc(newProck.split('.')[0], newProck.split('.')[1]);
+		vm.GetProc(newProck.split('.')[0], newProck.split('.')[1], newProck.split('.')[2]);
 	}
 	
 });
