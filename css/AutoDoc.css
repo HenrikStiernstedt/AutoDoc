@@ -1,0 +1,50 @@
+
+.primary1 {
+    color: #1d1f23;
+    background: #4795e2;
+}
+
+.primary2 {
+    color: #1d1f23;
+    background: #e55a5a;
+}
+
+.primary3 {
+    color: #1d1f23;
+    background: #976fc1;
+}
+
+.secondary {
+    background: #f0f3f7;
+}
+
+.secondary2 {
+    background: #dfe3e9;
+}
+
+.secondary3 {
+    background: #3a3d42;
+}
+
+.warning {
+    background: #f4db73;
+}
+
+.succcess {
+    background: #6dd187;
+}
+
+.error {
+    background: #e55a5a;
+}
+
+
+/*
+ * General overrides
+ */
+
+
+ .multisoft {
+     color: #1d1f23;
+     background: #f0f3f7;
+ }
