@@ -270,126 +270,114 @@
 	</head>
 	<body class="multisoft">
 
-		<div>
+		<div class="container">
 
-			<div >
-				<div class="row">
-					<div class="col-sm-12" >
-						<div id="infoPlace"></div>
-						<scrip id="info" type="text/x-handlebars-template" style="display:none">
-							<h1>Du är i databasen <span class="badge badge-primary primary1">{{Database}}</span></h1> 
-							<h2>Du visar just nu objekt <span class="badge badge-primary primary1">{{ CurrentItem.schema }}</span>.<span class="badge badge-primary primary1">{{ CurrentItem.name }}</span></h2>
-						</scrip>
-					</div>
-				</div>
-				<div>
-					<div>
-						<div id="output"></div>
-					</div>
-					<div>
-						<div id="graphPlace"></div>
-						<script id="graph" type="text/x-handlebars-template" style="display:none">
-						<textarea name="" id="input" cols="200" rows="15" style="display:none">
-	
-						</textarea>
-						</script>
-					</div>
+		
+			<div class="row">
+				<div class="col-sm-12" >
+					<div id="infoPlace"></div>
+					<scrip id="info" type="text/x-handlebars-template" style="display:none">
+						<h1>Du är i databasen <span class="badge badge-primary primary1">{{Database}}</span></h1> 
+						<h2>Du visar just nu objekt <span class="badge badge-primary primary1">{{ CurrentItem.schema }}</span>.<span class="badge badge-primary primary1">{{ CurrentItem.name }}</span></h2>
+					</scrip>
 				</div>
 			</div>
-
-			<!-- pre-tagg för debug -->
-			<button onClick="$('#debugArea').toggle(150);">Visa debuginfo</button>
-
-			
-			<button type="button" id="render">Render</button>
-		
-			<div id="infoDescriptionPlace">
-				<script id="inputTemplate" stype="display:none" type="text/x-handlebars-template">
-					<div id="debugArea" style="display:none">
-						<textarea cols="200" rows="15" id="rawValue">
-							graph LR
-								{{Info.object_id}}[{{Info.Name}}]
-
-								{{#each MetaDataReference}}
-
-								{{#if this.MenuItemId}}
-
-								MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
-								{{/if}}
-								{{#else}}
-
-								META{{@index}}([{{this.Kind}} '{{this.Description}}'])-->{{../Info.object_id}}
-								{{/else}}
-
-								{{/each}}
-
-								{{#each Calls}}
-
-									{{../Info.object_id}}-->{{this.object_id}}[{{this.Name}}]
-									click {{this.object_id}} "?callback={{../Database}}.{{this.Name}}"
-
-								{{/each}}
-
-								{{#each ReferencedBy}}
-									{{this.object_id}}[{{this.Name}}]-->{{../Info.object_id}}
-									click {{this.object_id}} "?callback={{../Database}}.{{this.Name}}"
-
-								{{/each}}
-
-							subgraph Aktivt objekt
-							{{Info.object_id}}
-							
-							end
-
-							
-							{{#each distinctReferencedSchemas}}
-								subgraph {{this.schemaName}}out [{{this.schemaName}}]
-								{{#each object_ids }}
-									{{object_id}}
-								{{/each}}
-								end
-							{{/each}}
-
-							
-							{{#each distinctCallSchemas}}
-								subgraph {{this.schemaName}}in [{{this.schemaName}}]
-								{{#each object_ids }}
-									{{object_id}}
-								{{/each}}
-								end
-							{{/each}}
-
-							classDef primary fill:#4795e2;
-
-							{{!--
-							<template v-for="s in distinctCallSchemas()">
-								subgraph {{s}}out [{{s}}]
-								<template v-for="p in GetSchemas(s)">
-									{{p.object_id}}
-								</template>
-								end
-							</template>
-							<template v-for="s2 in distinctReferencedSchemas()">
-								subgraph {{s2}}in [{{s2}}]
-								<template v-for="p2 in GetReferencedSchemas(s2)">
-									{{p2.object_id}}
-								</template>
-								end
-							</template>
-							--}}
-							
-						</textarea>
-					</div>
-
-					<pre class="definitionCodeArea"><code class="language-sql">{{Info.definition}}</code></pre>
-
-				</script>
-
-			
-			
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="output"></div>
 				
+					<div id="graphPlace"></div>
+					<script id="graph" type="text/x-handlebars-template" style="display:none">
+					<textarea name="" id="input" cols="200" rows="15" style="display:none">
+
+					</textarea>
+					</script>
+				</div>
 			</div>
 		
+			<div class="row">
+
+				<div class="col-sm-12">
+					<!-- pre-tagg för debug -->
+					<button onClick="$('#debugArea').toggle(150);">Visa debuginfo</button>
+
+					
+					<button type="button" id="render">Render</button>
+				</div>
+			</div>
+		
+			<div class="row">
+				<div id="infoDescriptionPlace" class="col-sm-12">
+					<script id="inputTemplate" stype="display:none" type="text/x-handlebars-template">
+						<div id="debugArea" style="display:none">
+							<textarea cols="200" rows="15" id="rawValue">
+								graph LR
+									{{Info.object_id}}[{{Info.Name}}]
+
+									{{#each MetaDataReference}}
+
+									{{#if this.MenuItemId}}
+
+									MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+									{{/if}}
+									{{#else}}
+
+									META{{@index}}([{{this.Kind}} '{{this.Description}}'])-->{{../Info.object_id}}
+									{{/else}}
+
+									{{/each}}
+
+									{{#each Calls}}
+
+										{{../Info.object_id}}-->{{this.object_id}}[{{this.Name}}]
+										click {{this.object_id}} "?callback={{../Database}}.{{this.Name}}"
+
+									{{/each}}
+
+									{{#each ReferencedBy}}
+										{{this.object_id}}[{{this.Name}}]-->{{../Info.object_id}}
+										click {{this.object_id}} "?callback={{../Database}}.{{this.Name}}"
+
+									{{/each}}
+
+								subgraph Aktivt objekt
+								{{Info.object_id}}
+								
+								end
+
+								
+								{{#each distinctReferencedSchemas}}
+									subgraph {{this.schemaName}}out [{{this.schemaName}}]
+									{{#each object_ids }}
+										{{object_id}}
+									{{/each}}
+									end
+								{{/each}}
+
+								
+								{{#each distinctCallSchemas}}
+									subgraph {{this.schemaName}}in [{{this.schemaName}}]
+									{{#each object_ids }}
+										{{object_id}}
+									{{/each}}
+									end
+								{{/each}}
+
+								classDef primary fill:#4795e2;							
+							</textarea>
+						</div>
+
+						
+							<pre class="definitionCodeArea"><code class="language-sql">{{Info.definition}}</code></pre>
+						
+
+					</script>
+
+				
+				
+					
+				</div>
+			</div>
 		
 		</div>
 
