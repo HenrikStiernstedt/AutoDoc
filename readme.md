@@ -20,6 +20,7 @@ To run this site, you need a web service that returns the data in exactly the ri
 
 # Softadmin
 * Show menuItem information and links with navigation
+* Show other objects with attached code, like Webservices and Snippets.
 * Define a JSON struct to use with "Developer comments" for documentation purposes
  * Define workflows
  * Extra information
