@@ -311,7 +311,7 @@
 								graph LR
 
 									{{#if this.Info.IsMenuItem}}
-										{{Info.object_id}}([{{Info.MenuItemId}} {{Info.Name}}])
+										{{Info.object_id}}([{{Info.MenuItemId}} {{escape_label Info.Name}}])
 									{{/if}}
 									{{#if this.Info.IsCodeObject}}
 										{{Info.object_id}}[{{Info.Name}}]
@@ -321,7 +321,7 @@
 
 									{{#if this.MenuItemId}}
 
-										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])-->{{../Info.object_id}}
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/if}}
 									{{#else}}
@@ -332,12 +332,12 @@
 									{{/each}}
 
 									{{#each LinksTo}}
-										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])-->{{../Info.object_id}}
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/each}}
 
 									{{#each LinksFrom}}
-										{{../Info.object_id}}-->MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])
+										{{../Info.object_id}}-->MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/each}}
 
