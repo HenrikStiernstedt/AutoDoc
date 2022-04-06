@@ -309,19 +309,36 @@
 						<div id="debugArea" style="display:none">
 							<textarea cols="200" rows="15" id="rawValue">
 								graph LR
-									{{Info.object_id}}[{{Info.Name}}]
+
+									{{#if this.Info.IsMenuItem}}
+										{{Info.object_id}}([{{Info.MenuItemId}} {{Info.Name}}])
+									{{/if}}
+									{{#if this.Info.IsCodeObject}}
+										{{Info.object_id}}[{{Info.Name}}]
+									{{/if}}
 
 									{{#each MetaDataReference}}
 
 									{{#if this.MenuItemId}}
 
-									MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/if}}
 									{{#else}}
 
-									META{{@index}}([{{this.Kind}} '{{this.Description}}'])-->{{../Info.object_id}}
+										META{{@index}}([{{this.Kind}} '{{this.Description}}'])-->{{../Info.object_id}}
 									{{/else}}
 
+									{{/each}}
+
+									{{#each LinksTo}}
+										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])-->{{../Info.object_id}}
+										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
+									{{/each}}
+
+									{{#each LinksFrom}}
+										{{../Info.object_id}}-->MI{{this.MenuItemId}}([{{this.MenuItemId}} {{this.MenuItemName}}])
+										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/each}}
 
 									{{#each Calls}}
