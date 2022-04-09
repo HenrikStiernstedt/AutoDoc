@@ -75,6 +75,7 @@
 		var config = {
 			startOnLoad:true,
 			securityLevel:'loose',
+			htmlLabels:true
 		};
 		
 		mermaid.initialize(config);
@@ -209,6 +210,10 @@
 		
 
 		function EscapeLabel(name) {
+			return name.replaceAll('"', '&quot;');
+		}
+
+		function EscapeLabelAll(name) {
 			return name
 				.replaceAll('&', '&amp;')
 				.replaceAll('<', '&lt;')
@@ -320,9 +325,8 @@
 						<div id="debugArea" style="display:none">
 							<textarea cols="200" rows="15" id="rawValue">
 								graph LR
-
 									{{#if this.Info.IsMenuItem}}
-										{{Info.object_id}}([{{Info.MenuItemId}} {{escape_label Info.Name}}])
+										{{Info.object_id}}(["<span class='badge badge-primary primary1'>{{Info.MenuItemId}}</span> {{escape_label Info.Name}}"])
 									{{/if}}
 									{{#if this.Info.IsCodeObject}}
 										{{Info.object_id}}[{{Info.Name}}]
@@ -332,7 +336,7 @@
 
 									{{#if this.MenuItemId}}
 
-										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])-->{{../Info.object_id}}
+										MI{{this.MenuItemId}}(["<span class='badge badge-primary primary1'>{{this.MenuItemId}}</span> {{escape_label this.MenuItemName}}"])-->{{../Info.object_id}}
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/if}}
 									{{#else}}
@@ -343,12 +347,23 @@
 									{{/each}}
 
 									{{#each LinksTo}}
-										MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])-->{{../Info.object_id}}
+										MI{{this.MenuItemId}}(["<span class='badge badge-primary primary1'>{{this.MenuItemId}}</span> {{escape_label this.MenuItemName}}"])
+											{{#if this.LinkLabel}}
+												--{{this.LinkLabel}}-->
+											{{else}}
+												-->
+											{{/if}}{{../Info.object_id}}
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/each}}
 
 									{{#each LinksFrom}}
-										{{../Info.object_id}}-->MI{{this.MenuItemId}}([{{this.MenuItemId}} {{escape_label this.MenuItemName}}])
+										{{../Info.object_id}}
+										{{#if this.LinkLabel}}
+											--{{this.LinkLabel}}-->
+										{{else}}
+											-->
+										{{/if}}
+										MI{{this.MenuItemId}}(["<span class='badge badge-primary primary1'>{{this.MenuItemId}}</span> {{escape_label this.MenuItemName}}"])
 										click MI{{this.MenuItemId}} "?callback={{../Database}}.MenuItem.{{this.MenuItemId}}"
 									{{/each}}
 
