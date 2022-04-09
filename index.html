@@ -148,10 +148,9 @@
 					prock = (prockInfo);
 
 					console.log(prockInfo);
-					//setTimeout(vm.LoadGraph, 100); // TODO: Find a better way to "wait" for vue to render the mermaid input data
 
 					var templateText = document.getElementById("info").innerHTML;
-					useTemplate(templateText, codeObject, "infoPlace");
+					useTemplate(templateText, { "database": database, "info": prockInfo.Info } , "infoPlace");
 
 					var templateText2 = document.getElementById("inputTemplate").innerHTML;
 					useTemplate(templateText2, prockInfo, "infoDescriptionPlace");
@@ -290,8 +289,12 @@
 				<div class="col-sm-12" >
 					<div id="infoPlace"></div>
 					<scrip id="info" type="text/x-handlebars-template" style="display:none">
-						<h1>Du är i databasen <span class="badge badge-primary primary1">{{Database}}</span></h1> 
-						<h2>Du visar just nu objekt <span class="badge badge-primary primary1">{{ CurrentItem.schema }}</span>.<span class="badge badge-primary primary1">{{ CurrentItem.name }}</span></h2>
+						<h1>Du är i databasen <span class="badge badge-primary primary1">{{database}}</span></h1> 
+						{{#if info.IsMenuItem}}
+						<h2>Du visar just nu manyval <span class="badge badge-primary primary1">{{ info.MenuItemId }}</span> <span class="badge badge-primary primary1">{{ info.Name }}</span></h2>
+						{{else}}
+						<h2>Du visar just nu objekt <span class="badge badge-primary primary1">{{ info.SchemaName }}</span>.<span class="badge badge-primary primary1">{{ info.ObjectName }}</span></h2>
+						{{/if}}
 					</scrip>
 				</div>
 			</div>
@@ -349,7 +352,7 @@
 									{{#each LinksTo}}
 										MI{{this.MenuItemId}}(["<span class='badge badge-primary primary1'>{{this.MenuItemId}}</span> {{escape_label this.MenuItemName}}"])
 											{{#if this.LinkLabel}}
-												--{{this.LinkLabel}}-->
+												--"{{escape_label this.LinkLabel}}"-->
 											{{else}}
 												-->
 											{{/if}}{{../Info.object_id}}
@@ -359,7 +362,7 @@
 									{{#each LinksFrom}}
 										{{../Info.object_id}}
 										{{#if this.LinkLabel}}
-											--{{this.LinkLabel}}-->
+											--"{{escape_label this.LinkLabel}}"-->
 										{{else}}
 											-->
 										{{/if}}
