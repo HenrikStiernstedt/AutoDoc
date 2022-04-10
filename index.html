@@ -425,6 +425,10 @@
 			<div class="row">
 				<div class="col-sm-12" >
 					<button onclick="loadVerionsHistory()">Versionshistorik</button>
+
+				</div>
+				<div class="col-sm-12" >
+					<div id="versionHistoryOutput"></div>
 				</div>
 			</div>
 		
@@ -445,13 +449,20 @@
 							success: function(versionHistory) {
 
 								console.log(versionHistory);
+								
+								var templateText = document.getElementById("VersionHistoryTemplate").innerHTML;
+								useTemplate(templateText, versionHistory, "versionHistoryOutput")
 
-								var input = document.getElementById("versionHistoryGraph");
-								var output = document.getElementById("versionHistory");
-								console.log(input.value);
+								/*
+								var input = document.getElementById("versionHistoryGraphData");
+								var output = document.getElementById("versionHistoryOutput");
+								
+								console.log(input);
+
 								mermaid.render('theGraph2', input.value, function(svgCode) {
 									output.innerHTML = svgCode;
 								});
+								*/
 							},
 							error: function(versionHistory) {
 								console.error("Failed to load versionHistory");
@@ -466,20 +477,22 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12" >
-				<div id="versionHistory">
+				
 				</div>
-				<textarea id="versionHistoryGraph" style="display:none">
-					gantt
-title Versionshistorik
-dateFormat  YYYY-MM-DD
-section Section
-A task           :a1, 2014-01-01, 30d
-A task           :a1, 2015-01-01, 30d
-Another task     :after a1  , 20d
-section Another
-Task in sec      :2014-01-12  , 12d
-another task      : 24d
-				</textarea>
+				<script id="VersionHistoryTemplate" stype="display:none" type="text/x-handlebars-template">
+					<textarea id="versionHistoryGraphData" cols="200" rows="15">
+						gantt
+							title Versionshistorik
+							dateFormat  YYYY-MM-DD
+							section Section
+							{{#each versionHistory}}
+							A task           :a{{this.VersionHistoryId}}, {{this.ChangeDateTime}}, 30d
+							{{/each}}
+							
+					</textarea>
+
+				</script>
+				
 			</div>
 		</div>
 
