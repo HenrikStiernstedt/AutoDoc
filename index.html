@@ -200,10 +200,10 @@
 		function renderNewGraph() 
 		{
 			var input = document.getElementById("rawValue");
-				var output = document.getElementById("output");
-				mermaid.render('theGraph', input.value, function(svgCode) {
-					output.innerHTML = svgCode;
-				});
+			var output = document.getElementById("output");
+			mermaid.render('theGraph', input.value, function(svgCode) {
+				output.innerHTML = svgCode;
+			});
 		}
 
 		
@@ -421,7 +421,66 @@
 					
 				</div>
 			</div>
+			<!-- Place next row here-->
+			<div class="row">
+				<div class="col-sm-12" >
+					<button onclick="loadVerionsHistory()">Versionshistorik</button>
+				</div>
+			</div>
 		
+		</div>
+		<div class="row">
+			<div class="col-sm-12" >
+				
+
+
+				<script type="text/javascript">
+
+					function loadVerionsHistory()
+					{
+						var status = $.ajax({
+							dataType: "json",
+							url: 'http://pegasus/pegasus_demo/Multirest/AutoDoc/'+codeObject.Database+'/'+codeObject.CurrentItem.schema+'/'+codeObject.CurrentItem.name+'/versionHistory',
+							data: null,
+							success: function(versionHistory) {
+
+								console.log(versionHistory);
+
+								var input = document.getElementById("versionHistoryGraph");
+								var output = document.getElementById("versionHistory");
+								console.log(input.value);
+								mermaid.render('theGraph2', input.value, function(svgCode) {
+									output.innerHTML = svgCode;
+								});
+							},
+							error: function(versionHistory) {
+								console.error("Failed to load versionHistory");
+								console.log(versionHistory);
+							}
+						});
+					}
+
+				</script>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" >
+				<div id="versionHistory">
+				</div>
+				<textarea id="versionHistoryGraph" style="display:none">
+					gantt
+title Versionshistorik
+dateFormat  YYYY-MM-DD
+section Section
+A task           :a1, 2014-01-01, 30d
+A task           :a1, 2015-01-01, 30d
+Another task     :after a1  , 20d
+section Another
+Task in sec      :2014-01-12  , 12d
+another task      : 24d
+				</textarea>
+			</div>
 		</div>
 
     <!--<script src="autodocGraph.js"></script>-->
