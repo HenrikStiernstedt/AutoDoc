@@ -1,4 +1,4 @@
-## Sodftadmin code browser - SCB
+## Softadmin code browser - SCB
 This is only half of the project!
 To run this site, you need a web service that returns the data in exactly the right way.
 
