@@ -72,17 +72,24 @@
 	</style>
 
 	<script>
-		var config = {
-			startOnLoad:true,
-			securityLevel:'loose',
-			htmlLabels:true
-		};
-		
-		mermaid.initialize(config);
+
+		var callback = function(){
+			alert('A callback was triggered');
+		}
+
+		var  myClickHandler = function() {
+			//alert("Hej");
+			console.log("Click on ");
+		}
+
+
 		
 	</script>
 	<script>
 
+
+
+		
 
 		var codeObject = {
 				Database: "OFP",
@@ -201,7 +208,22 @@
 		{
 			var input = document.getElementById("rawValue");
 			var output = document.getElementById("output");
-			mermaid.render('theGraph', input.value, function(svgCode) {
+
+			var config = {
+				startOnLoad:true,
+				securityLevel:'loose',
+				flowchart:{
+					useMaxWidth:true,
+					htmlLabels:true,
+					curve:'cardinal',
+				}
+			};
+			
+			mermaid.mermaidAPI.initialize(config);
+
+
+			
+			mermaid.mermaidAPI.render('theGraph', input.value, function(svgCode) {
 				output.innerHTML = svgCode;
 			});
 		}
@@ -291,7 +313,7 @@
 					<scrip id="info" type="text/x-handlebars-template" style="display:none">
 						<h1>Du är i databasen <span class="badge badge-primary primary1">{{database}}</span></h1> 
 						{{#if info.IsMenuItem}}
-						<h2>Du visar just nu manyval <span class="badge badge-primary primary1">{{ info.MenuItemId }}</span> <span class="badge badge-primary primary1">{{ info.Name }}</span></h2>
+						<h2>Du visar just nu menyval <span class="badge badge-primary primary1">{{ info.MenuItemId }}</span> <span class="badge badge-primary primary1">{{ info.Name }}</span></h2>
 						{{else}}
 						<h2>Du visar just nu objekt <span class="badge badge-primary primary1">{{ info.SchemaName }}</span>.<span class="badge badge-primary primary1">{{ info.ObjectName }}</span></h2>
 						{{/if}}
@@ -327,7 +349,13 @@
 					<script id="inputTemplate" stype="display:none" type="text/x-handlebars-template">
 						<div id="debugArea" style="display:none">
 							<textarea cols="200" rows="15" id="rawValue">
-								graph LR
+								graph LR;
+
+									A;
+									click A call myClickHandler()
+									B;
+									click B call callback()
+
 									{{#if this.Info.IsMenuItem}}
 										{{Info.object_id}}(["<span class='badge badge-primary primary1'>{{Info.MenuItemId}}</span> {{escape_label Info.Name}}"])
 									{{/if}}
